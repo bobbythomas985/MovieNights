@@ -1,122 +1,56 @@
-/* General Styling */
 body {
-    background-color: black;
-    font-family: Arial, sans-serif;
-    color: white;
-    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: #272b06;
+    background: rgb(41, 3, 3);
+    color: #ffffff; 
+    padding: 20px; 
+    border-radius: 10px; 
+    text-align: center;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: medium;
 }
 
-/* Navigation Bar */
-nav {
-    background-color: #222;
-    padding: 10px 20px;
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: rgba(39, 24, 1, 0.8); 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.movie-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
-nav .logo {
-    font-size: 1.5em;
-    color: red;
-    font-weight: bold;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Sign-Up Container */
-.signup-container {
-    width: 50%; /* Reduced from 80% to 50% */
-    max-width: 600px; /* Limits width for larger screens */
-    margin: 20px auto;
-    background-color: #222;
-    padding: 20px;
+.movie-poster {
+    width: 300px; 
+    height: auto;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    margin-right: 20px;
+    display: block; 
+    margin: 20px auto; 
 }
 
-.signup-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
+.movie-details {
+    flex: 1; 
 }
 
-/* Form Fields */
-form label {
-    display: block;
-    margin: 10px 0 5px;
+.movie-title {
+    font-size: 2em; 
+    margin: 0 0 10px;
 }
 
-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
+.movie-genre,
+.movie-rating {
+    font-size: 1em;
+    color: #b3b3b3; 
 }
 
-/* Gmail Sign-Up Button */
-.gmail-signup {
-    width: 100%;
-    padding: 10px;
-    background-color: #db4437;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: not-allowed;
-    margin-bottom: 20px;
-}
-
-/* Language and Genre Preferences */
-.language-options, .genre-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.language-btn, .genre-btn {
-    padding: 10px;
-    background-color: gray;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    flex: 1;
-}
-
-.language-btn:hover, .genre-btn:hover {
-    background-color: #444;
-}
-
-/* Submit Button */
-.submit-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.submit-btn:hover {
-    background-color: darkred;
+.movie-description {
+    margin-top: 10px;
+    line-height: 1.6;
 }
