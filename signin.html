@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            background-color: #121212;
+            background-image: url('https://m.media-amazon.com/images/I/A1B+p2QqSfL.jpg'); /* Set the background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative; /* Set position relative for the pseudo-element */
+        }
+        /* Black translucent filter */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+            z-index: 1; /* Position behind the content */
+        }
+        .login-container {
+            position: relative; /* Position relative to stack correctly */
+            z-index: 2; /* Position above the filter */
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .login-container img {
+            width: 120px; /* Reduced size of the image */
+            height: 120px; /* Ensure height matches width for circular shape */
+            border-radius: 50%; /* Make the image circular */
+            border: 2px solid #000;
+            margin-bottom: 20px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 70%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 75%;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .signup-link {
+            margin-top: 10px;
+            color: #f7f9fbeb;
+        }
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        h2 {
+            font-size: 40px; /* Change to your desired size */
+        }
+        h1 {
+            font-size: 50px; /* Change to your desired size */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>MovieNights</h1>
+        <h2>Sign In</h2>
+        <img 
+        src="https://i.pinimg.com/736x/3b/73/48/3b73483fa5af06e3ba35f4f71e541e7a.jpg" 
+        alt="Human Image"> 
+        <form action="/login" method="POST">
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+        <div class="signup-link">
+            Don't have an account? <a href="/signup">Sign up here</a>
+        </div>
+    </div>
+</body>
+</html>
