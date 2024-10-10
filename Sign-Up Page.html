@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieNights - Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">MovieNights</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Sign In</a></li>
+            <li><a href="#">Sign Up</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sign-Up Form -->
+    <div class="signup-container">
+        <h1>Sign Up</h1>
+
+        <!-- Non-functional Gmail Sign-Up Button -->
+        <button class="gmail-signup">Sign Up with Gmail</button>
+
+        <!-- Form Fields -->
+        <form id="signup-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" name="mobile" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <!-- Language Preference Section -->
+            <h2>Language Preference</h2>
+            <div class="language-options">
+                <button type="button" class="language-btn">English</button>
+                <button type="button" class="language-btn" style="background-color: yellow;">Hindi</button>
+                <button type="button" class="language-btn" style="background-color: green;">Malayalam</button>
+                <button type="button" class="language-btn" style="background-color: blue;">French</button>
+                <button type="button" class="language-btn" style="background-color: red;">Tamil</button>
+            </div>
+
+            <!-- Genre Preference Section -->
+            <h2>Genre Preference</h2>
+            <div class="genre-options">
+                <button type="button" class="genre-btn" style="background-color: lightblue;">Comedy</button>
+                <button type="button" class="genre-btn" style="background-color: pink;">Romance</button>
+                <button type="button" class="genre-btn" style="background-color: orange;">Action</button>
+                <button type="button" class="genre-btn" style="background-color: lightgreen;">Thriller</button>
+                <button type="button" class="genre-btn" style="background-color: purple;">Horror</button>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
