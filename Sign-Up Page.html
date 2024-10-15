@@ -4,7 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieNights - Sign Up</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styling */
+body {
+    background-color: black;
+    font-family: Arial, sans-serif;
+    color: white;
+    margin: 0;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #222;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo {
+    font-size: 1.5em;
+    color: red;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Sign-Up Container */
+.signup-container {
+    width: 50%; /* Reduced from 80% to 50% */
+    max-width: 600px; /* Limits width for larger screens */
+    margin: 20px auto;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.signup-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Fields */
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+}
+
+/* Gmail Sign-Up Button */
+.gmail-signup {
+    width: 100%;
+    padding: 10px;
+    background-color: #db4437;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    margin-bottom: 20px;
+}
+
+/* Language and Genre Preferences */
+.language-options, .genre-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.language-btn, .genre-btn {
+    padding: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.language-btn:hover, .genre-btn:hover {
+    background-color: #444;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: darkred;
+}
+
+    </style>
+    <script>
+        function goToLanguagePage() {
+    window.location.href = 'language.html';
+}
+</script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -66,6 +195,5 @@
         </form>
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
