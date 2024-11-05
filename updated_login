@@ -1,0 +1,211 @@
+import streamlit as st
+import pandas as pd
+from utils import load_data, preprocess_data, compute_similarity, recommend_movie, create_user, authenticate_user
+
+# Load and preprocess data
+meta = load_data()
+meta, mlb, overview_df = preprocess_data(meta)
+similarity_matrix = compute_similarity(meta, mlb, overview_df)
+
+# Set page config for better visuals
+st.set_page_config(page_title="Movie Recommendation System", layout="wide")
+
+# Define custom CSS for styling
+st.markdown("""
+<style>
+    .stApp {
+        background-image: url("https://mrwallpaper.com/images/high/a-collection-of-horror-movie-posters-xtjhn92yx4u36s6r.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #343a40;
+    }
+    
+    /* Centered box for sign-in */
+    
+    
+    h1 {
+        text-align: center;
+        color: #8B0000;
+        background-color: #F8F9FA;
+
+    }
+    
+    /* Custom CSS for input fields */
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #007bff;
+         input[type="text"], input[type="password"] {
+        color: #8B0000;             /* Text color */
+        padding: 10px;            /* Add padding for a nice look */
+        border-radius: 5px;       /* Optional: rounded corners */
+        font-size: 18px;          /* Font size for text input */
+        font-weight: bold;
+        border: none;             /* Remove border */
+        width: 100%;              /* Full width */
+        box-sizing: border-box;   /* Box-sizing to avoid overflow */
+    }
+    input[type="text"]::placeholder, input[type="password"]::placeholder {
+        color: #FFFFFF;           /* Placeholder text color */
+    }
+
+    /* Remove the blue border on focus */
+    input[type="text"]:focus, input[type="password"]:focus {
+        outline: none;
+    }
+    }
+    
+    .stButton > button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        margin-top: 10px;
+        border: none;
+    }
+     .custom-label {
+        background-color: #8B0000; /* Dark Red background color */
+        color: white;              /* White text color */
+        padding: 10px;             /* Add padding for a nice look */
+        border-radius: 5px;        /* Optional: rounded corners */
+        font-size: 20px;           /* Font size for labels */
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 5px;
+        display: inline-block;
+        width: 100%;
+    }
+    .stButton > button:hover {
+        background-color: #0056b3;
+    }
+    
+    .custom-subheader {
+        background-color: #8B0000; /* Dark Red background color */
+        color: white;             /* Text color */
+        padding: 10px;            /* Add padding for a nice look */
+        border-radius: 5px;       /* Optional: rounded corners */
+        font-size: 24px;          /* Font size for subheader */
+        font-weight: bold;
+        text-align: center;
+    }
+    
+</style>
+""", unsafe_allow_html=True)
+
+# Streamlit app layout
+st.title("MovieNights")
+
+# Page navigation and session state management
+if 'user' not in st.session_state:
+    st.session_state.user = None
+if 'page' not in st.session_state:
+    st.session_state.page = "sign_in"
+if 'selected_movie' not in st.session_state:
+    st.session_state.selected_movie = None
+
+# Sign In page
+if st.session_state.page == "sign_in":
+    # Create a centered box for authentication
+    st.markdown('<div class="auth-container">', unsafe_allow_html=True)
+    st.markdown('<div class="custom-subheader">Sign In</div>', unsafe_allow_html=True)
+
+    # Input fields inside container
+    st.markdown('<div class="custom-label">Username</div>', unsafe_allow_html=True)
+    username = st.text_input("", key='username_input')
+
+    st.markdown('<div class="custom-label">Password</div>', unsafe_allow_html=True)
+    password = st.text_input("", type='password', key='password_input')
+
+    # Buttons inside container
+    sign_in_col, sign_up_col = st.columns(2)
+    with sign_in_col:
+        if st.button("Sign In", key='sign_in_button'):
+            user, genres = authenticate_user(username, password)
+            if user is not None:
+                st.session_state.user = user
+                st.session_state.genres = genres
+                st.session_state.page = "home"
+                st.success("Logged in successfully!")
+            else:
+                st.error("Invalid username or password.")
+    with sign_up_col:
+        if st.button("Don't have an account? Sign Up", key='redirect_sign_up'):
+            st.session_state.page = "sign_up"
+
+    # Closing div for container
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Sign Up page
+elif st.session_state.page == "sign_up":
+    st.subheader("Sign Up")
+    username = st.text_input("Username", key="signup_username")
+    password = st.text_input("Password", type='password', key="signup_password")
+    genres = st.multiselect("Select your favorite genres", options=meta['genres'].explode().unique())
+    
+    if st.button("Sign Up", key='sign_up_button'):
+        if create_user(username, password, ','.join(genres)):
+            st.success("Account created successfully! Please log in.")
+            st.session_state.page = "sign_in"
+        else:
+            st.error("Username already exists.")
+    
+    if st.button("Already have an account? Sign In", key='redirect_sign_in'):
+        st.session_state.page = "sign_in"
+
+# Home page after successful sign-in
+elif st.session_state.page == "home" and st.session_state.user is not None:
+    st.subheader("Top Movies Based on Your Genres")
+    selected_genres = st.session_state.genres.split(',')
+    filtered_movies = meta[meta['genres'].apply(lambda x: any(genre in x for genre in selected_genres))]
+    top_movies = filtered_movies.sort_values(by='vote_average', ascending=False).head(20)
+
+    # Display movies in a grid layout
+    cols = st.columns(4)
+    for index, row in top_movies.iterrows():
+        with cols[index % 4]:
+            if st.button(row['title'], key=f"movie_{index}"):
+                st.session_state.selected_movie = row
+                st.session_state.page = "movie_details"
+
+            st.markdown(f"""
+                <div class="movie-card">
+                    <img src="{"http://image.tmdb.org/t/p/w185" + row['poster_path']}" width="100%" alt="{row['title']}"/>
+                    <div class="movie-title">{row['title']}</div>
+                </div>
+            """, unsafe_allow_html=True)
+
+    # Logout button
+    if st.button("Log Out"):
+        st.session_state.user = None
+        st.session_state.page = "sign_in"
+
+# Movie Details Page
+elif st.session_state.page == "movie_details" and st.session_state.selected_movie is not None:
+    movie_details = st.session_state.selected_movie
+    st.subheader(movie_details['title'])
+    st.image("http://image.tmdb.org/t/p/w500" + movie_details['poster_path'], width=300)
+    st.write(movie_details['overview'])
+
+    # Show similar movies based on selected movie
+    recommended_movies = recommend_movie(movie_details['title'], meta, similarity_matrix)
+    st.subheader("Recommended Movies")
+    
+    # Display recommended movies in a grid layout
+    rec_cols = st.columns(4)
+    for idx, rec_movie in recommended_movies.iterrows():
+        with rec_cols[idx % 4]:
+            st.markdown(f"""
+                <div class="movie-card">
+                    <img src="{"http://image.tmdb.org/t/p/w185" + rec_movie['poster_path']}" width="100%" alt="{rec_movie['title']}"/>
+                    <div class="movie-title">{rec_movie['title']}</div>
+                    <div>{rec_movie['overview']}</div>
+                </div>
+            """, unsafe_allow_html=True)
+
+    # Back to home button
+    if st.button("Home"):
+        st.session_state.page = "home"
